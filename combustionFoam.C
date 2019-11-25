@@ -25,19 +25,15 @@ Application
     combustionFoam
 
 Description
-    Transient solver for compressible, turbulent flow with a reacting,
-    multiphase particle cloud, and surface film modelling.
+    Transient solver for compressible, turbulent reacting flow.
 
 \*---------------------------------------------------------------------------*/
 
 #include "fvCFD.H"
 #include "turbulentFluidThermoModel.H"
-#include "basicReactingMultiphaseCloud.H"
-#include "surfaceFilmModel.H"
 #include "rhoReactionThermo.H"
 #include "CombustionModel.H"
 #include "radiationModel.H"
-#include "SLGThermo.H"
 #include "fvOptions.H"
 #include "pimpleControl.H"
 #include "pressureControl.H"
@@ -82,44 +78,39 @@ int main(int argc, char *argv[])
         else
         {
             #include "compressibleCourantNo.H"
-            #include "setMultiRegionDeltaT.H"
+            #include "setDeltaT.H"
         }
 
         runTime++;
 
         Info<< "Time = " << runTime.timeName() << nl << endl;
 
-        parcels.evolve();
-        surfaceFilm.evolve();
 
-        if (solvePrimaryRegion)
+        if (pimple.nCorrPimple() <= 1)
         {
-            if (pimple.nCorrPimple() <= 1)
-            {
-                #include "rhoEqn.H"
-            }
-
-            // --- PIMPLE loop
-            while (pimple.loop())
-            {
-                #include "UEqn.H"
-                #include "YEqn.H"
-                #include "EEqn.H"
-
-                // --- Pressure corrector loop
-                while (pimple.correct())
-                {
-                    #include "pEqn.H"
-                }
-
-                if (pimple.turbCorr())
-                {
-                    turbulence->correct();
-                }
-            }
-
-            rho = thermo.rho();
+            #include "rhoEqn.H"
         }
+
+        // --- PIMPLE loop
+        while (pimple.loop())
+        {
+            #include "UEqn.H"
+            #include "YEqn.H"
+            #include "EEqn.H"
+
+            // --- Pressure corrector loop
+            while (pimple.correct())
+            {
+                #include "pEqn.H"
+            }
+
+            if (pimple.turbCorr())
+            {
+                turbulence->correct();
+            }
+        }
+
+        rho = thermo.rho();
 
         runTime.write();
 

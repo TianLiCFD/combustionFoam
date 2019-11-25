@@ -6,8 +6,7 @@
       + MRF.DDt(rho, U)
       + turbulence->divDevRhoReff(U)
      ==
-        parcels.SU(U)
-      + fvOptions(rho, U)
+        fvOptions(rho, U)
     );
 
     UEqn.relax();

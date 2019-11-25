@@ -18,8 +18,6 @@
       - fvm::laplacian(turbulence->alphaEff(), he)
      ==
         rho*(U&g)
-      + parcels.Sh(he)
-      + surfaceFilm.Sh()
       + radiation->Sh(thermo, he)
       + combustion->Qdot()
       + fvOptions(rho, he)

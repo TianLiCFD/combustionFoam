@@ -77,15 +77,14 @@ License
         volScalarField::Internal rDeltaTT
         (
             mag
-            (
-               parcels.hsTrans()/(mesh.V()*runTime.deltaT())
-             + combustion->Qdot()()
+            (               
+               combustion->Qdot()
             )
            /(
                alphaTemp
-              *rho()
-              *thermo.Cp()()()
-              *T()
+              *rho
+              *thermo.Cp()
+              *T
            )
         );
 

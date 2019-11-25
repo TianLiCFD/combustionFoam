@@ -5,8 +5,6 @@ autoPtr<rhoReactionThermo> pThermo(rhoReactionThermo::New(mesh));
 rhoReactionThermo& thermo = pThermo();
 thermo.validate(args.executable(), "h", "e");
 
-SLGThermo slgThermo(mesh, thermo);
-
 basicSpecieMixture& composition = thermo.composition();
 PtrList<volScalarField>& Y = composition.Y();
 
@@ -119,6 +117,4 @@ fields.add(thermo.he());
 
 #include "createMRF.H"
 #include "createRadiationModel.H"
-#include "createClouds.H"
-#include "createSurfaceFilmModel.H"
 #include "createFvOptions.H"

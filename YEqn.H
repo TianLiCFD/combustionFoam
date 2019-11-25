@@ -26,10 +26,8 @@ tmp<fv::convectionScheme<scalar>> mvConvection
               + mvConvection->fvmDiv(phi, Yi)
               - fvm::laplacian(turbulence->muEff(), Yi)
               ==
-                parcels.SYi(i, Yi)
-              + fvOptions(rho, Yi)
+                fvOptions(rho, Yi)
               + combustion->R(Yi)
-              + surfaceFilm.Srho(i)
             );
 
             YEqn.relax();

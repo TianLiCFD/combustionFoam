@@ -33,9 +33,7 @@ fvScalarMatrix p_rghDDtEqn
     fvc::ddt(rho) + psi*correction(fvm::ddt(p_rgh))
   + fvc::div(phiHbyA)
  ==
-    parcels.Srho()
-  + surfaceFilm.Srho()
-  + fvOptions(psi, p_rgh, rho.name())
+    fvOptions(psi, p_rgh, rho.name())
 );
 
 while (pimple.correctNonOrthogonal())
