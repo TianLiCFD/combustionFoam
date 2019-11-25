@@ -22,7 +22,7 @@ License
     along with OpenFOAM.  If not, see <http://www.gnu.org/licenses/>.
 
 Application
-    reactingParcelFoam
+    combustionFoam
 
 Description
     Transient solver for compressible, turbulent flow with a reacting,
